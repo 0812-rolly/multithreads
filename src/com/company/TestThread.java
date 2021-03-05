@@ -2,11 +2,11 @@ package com.company;
 
 // 1 ПРИМЕР  Создание потока путем реализации интерфейса Runnable и путем расширения класса Thread
 
-//class RunnableDemo implements Runnable {
+//class ThreadDemo extends Thread {
 //    private Thread t;
 //    private String threadName;
 //
-//    RunnableDemo(String name) {
+//    ThreadDemo(String name) {
 //        threadName = name;
 //        System.out.println("Создание " +  threadName );
 //    }
@@ -38,18 +38,18 @@ package com.company;
 //public class TestThread {
 //
 //    public static void main(String args[]) {
-//        RunnableDemo R1 = new RunnableDemo( "Поток-1");
-//        R1.start();
+//        ThreadDemo T1 = new ThreadDemo( "Поток-1");
+//        T1.start();
 //
-//        RunnableDemo R2 = new RunnableDemo( " Поток-2");
-//        R2.start();
+//        ThreadDemo T2 = new ThreadDemo( " Поток-2");
+//        T2.start();
 //
 //    }
 //}
-
+//
 
 // 2 ПРИМЕР  Использование булевой изменяемой переменной
-
+//
 //class StopThread extends Thread {
 //    /* Setting the volatile variable
 //       exit to false */
@@ -92,7 +92,7 @@ package com.company;
 
 
 // 3 ПРИМЕР  Interrupt()
-
+//
 //class StopThread extends Thread {
 //
 //    @Override
@@ -123,4 +123,30 @@ package com.company;
 //    }
 //}
 
+class PeopleQueue extends Thread {
+    private String[] names;
+    PeopleQueue(String... names) {
+        this.names = names;
+    }
+    public void run(){
+        for(int i = 0; i < names.length; i++) {
+            System.out.println("Обработаны документы: " + names[i]);
 
+            try {
+                sleep(500);
+            } catch (Exception e) {
+            }
+        }
+    }
+}
+
+public class TestThread {
+    public static void main(String[] args) {
+        PeopleQueue queue1 = new PeopleQueue("Иван", "Сергей", "Максим", "Антон","Андрей", "Василий" );
+        PeopleQueue queue2 = new PeopleQueue("Мария", "Алиса", "Людмила", "Екатерина","Ольга", "Наталья" );
+
+        System.out.println("Начинаем работу. ");
+        queue1.start();
+        queue2.start();
+    }
+}
